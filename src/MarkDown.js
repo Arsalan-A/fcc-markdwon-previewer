@@ -50,17 +50,30 @@ And here. | Okay. | I think we get it.
 `;
   const [markDown, setMarkDown] = useState(placeholder);
 
+  const [previewExpand, setPreviewExpand] = useState(false);
+  const [editorExpand, setEditorExpand] = useState(false);
+
   const handleChange = (e) => {
     setMarkDown(e.target.value);
   };
 
+  const previewClickHandler = (e) => {
+    e.preventDefault();
+    setPreviewExpand(!previewExpand);
+  };
+
+  const editorClickHandler = (e) => {
+    e.preventDefault();
+    setEditorExpand(!editorExpand);
+  };
+
   return (
     <div className='container'>
-      <div className='view'>
+      <div className={editorExpand ? 'view active' : 'view'}>
         <div className='header'>
           <p>{`<Editor/>`}</p>
-          <button className='btn'>
-            <FiMaximize2 />
+          <button onClick={editorClickHandler} className='btn'>
+            {editorExpand ? <FiMinimize2 /> : <FiMaximize2 />}
           </button>
         </div>
         <textarea
@@ -70,11 +83,11 @@ And here. | Okay. | I think we get it.
         ></textarea>
       </div>
 
-      <div className='view'>
-        <div className='header'>
+      <div className={previewExpand ? 'view active' : 'view'}>
+        <div className='header' id='view-header'>
           <p>Preview</p>
-          <button className='btn'>
-            <FiMaximize2 />
+          <button onClick={previewClickHandler} className='btn'>
+            {previewExpand ? <FiMinimize2 /> : <FiMaximize2 />}
           </button>
         </div>
         <article id='preview'>
